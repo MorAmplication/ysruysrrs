@@ -1,11 +1,26 @@
 import * as React from "react";
-import { Edit, SimpleForm, EditProps } from "react-admin";
+import {
+  Edit,
+  SimpleForm,
+  EditProps,
+  TextInput,
+  PasswordInput,
+  SelectArrayInput,
+} from "react-admin";
+import { ROLES_OPTIONS } from "../user/RolesOptions";
 
 export const DaniEdit = (props: EditProps): React.ReactElement => {
   return (
     <Edit {...props}>
       <SimpleForm>
-        <div />
+        <TextInput label="Username" source="username" />
+        <PasswordInput label="Password" source="password" />
+        <SelectArrayInput
+          source="roles"
+          choices={ROLES_OPTIONS}
+          optionText="label"
+          optionValue="value"
+        />
       </SimpleForm>
     </Edit>
   );

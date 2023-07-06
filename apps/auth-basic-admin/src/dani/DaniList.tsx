@@ -15,6 +15,8 @@ export const DaniList = (props: ListProps): React.ReactElement => {
         <TextField label="ID" source="id" />
         <DateField source="createdAt" label="Created At" />
         <DateField source="updatedAt" label="Updated At" />
+        <TextField label="Username" source="username" />
+        <TextField label="Roles" source="roles" />
       </Datagrid>
     </List>
   );
