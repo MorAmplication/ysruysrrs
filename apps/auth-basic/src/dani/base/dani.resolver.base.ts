@@ -18,6 +18,9 @@ import * as gqlACGuard from "../../auth/gqlAC.guard";
 import { GqlDefaultAuthGuard } from "../../auth/gqlDefaultAuth.guard";
 import * as common from "@nestjs/common";
 import { AclFilterResponseInterceptor } from "../../interceptors/aclFilterResponse.interceptor";
+import { AclValidateRequestInterceptor } from "../../interceptors/aclValidateRequest.interceptor";
+import { CreateDaniArgs } from "./CreateDaniArgs";
+import { UpdateDaniArgs } from "./UpdateDaniArgs";
 import { DeleteDaniArgs } from "./DeleteDaniArgs";
 import { DaniCountArgs } from "./DaniCountArgs";
 import { DaniFindManyArgs } from "./DaniFindManyArgs";
@@ -71,6 +74,43 @@ export class DaniResolverBase {
       return null;
     }
     return result;
+  }
+
+  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @graphql.Mutation(() => Dani)
+  @nestAccessControl.UseRoles({
+    resource: "Dani",
+    action: "create",
+    possession: "any",
+  })
+  async createDani(@graphql.Args() args: CreateDaniArgs): Promise<Dani> {
+    return await this.service.create({
+      ...args,
+      data: args.data,
+    });
+  }
+
+  @common.UseInterceptors(AclValidateRequestInterceptor)
+  @graphql.Mutation(() => Dani)
+  @nestAccessControl.UseRoles({
+    resource: "Dani",
+    action: "update",
+    possession: "any",
+  })
+  async updateDani(@graphql.Args() args: UpdateDaniArgs): Promise<Dani | null> {
+    try {
+      return await this.service.update({
+        ...args,
+        data: args.data,
+      });
+    } catch (error) {
+      if (isRecordNotFoundError(error)) {
+        throw new apollo.ApolloError(
+          `No resource was found for ${JSON.stringify(args.where)}`
+        );
+      }
+      throw error;
+    }
   }
 
   @graphql.Mutation(() => Dani)

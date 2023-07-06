@@ -53,6 +53,8 @@ export class DaniControllerBase {
         id: true,
         createdAt: true,
         updatedAt: true,
+        username: true,
+        roles: true,
       },
     });
   }
@@ -77,6 +79,8 @@ export class DaniControllerBase {
         id: true,
         createdAt: true,
         updatedAt: true,
+        username: true,
+        roles: true,
       },
     });
   }
@@ -102,6 +106,8 @@ export class DaniControllerBase {
         id: true,
         createdAt: true,
         updatedAt: true,
+        username: true,
+        roles: true,
       },
     });
     if (result === null) {
@@ -136,6 +142,8 @@ export class DaniControllerBase {
           id: true,
           createdAt: true,
           updatedAt: true,
+          username: true,
+          roles: true,
         },
       });
     } catch (error) {
@@ -169,6 +177,8 @@ export class DaniControllerBase {
           id: true,
           createdAt: true,
           updatedAt: true,
+          username: true,
+          roles: true,
         },
       });
     } catch (error) {

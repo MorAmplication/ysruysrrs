@@ -11,9 +11,14 @@ https://docs.amplication.com/how-to/custom-code
   */
 import { PrismaService } from "../../prisma/prisma.service";
 import { Prisma, Dani } from "@prisma/client";
+import { PasswordService } from "../../auth/password.service";
+import { transformStringFieldUpdateInput } from "../../prisma.util";
 
 export class DaniServiceBase {
-  constructor(protected readonly prisma: PrismaService) {}
+  constructor(
+    protected readonly prisma: PrismaService,
+    protected readonly passwordService: PasswordService
+  ) {}
 
   async count<T extends Prisma.DaniCountArgs>(
     args: Prisma.SelectSubset<T, Prisma.DaniCountArgs>
@@ -34,12 +39,32 @@ export class DaniServiceBase {
   async create<T extends Prisma.DaniCreateArgs>(
     args: Prisma.SelectSubset<T, Prisma.DaniCreateArgs>
   ): Promise<Dani> {
-    return this.prisma.dani.create<T>(args);
+    return this.prisma.dani.create<T>({
+      ...args,
+
+      data: {
+        ...args.data,
+        password: await this.passwordService.hash(args.data.password),
+      },
+    });
   }
   async update<T extends Prisma.DaniUpdateArgs>(
     args: Prisma.SelectSubset<T, Prisma.DaniUpdateArgs>
   ): Promise<Dani> {
-    return this.prisma.dani.update<T>(args);
+    return this.prisma.dani.update<T>({
+      ...args,
+
+      data: {
+        ...args.data,
+
+        password:
+          args.data.password &&
+          (await transformStringFieldUpdateInput(
+            args.data.password,
+            (password) => this.passwordService.hash(password)
+          )),
+      },
+    });
   }
   async delete<T extends Prisma.DaniDeleteArgs>(
     args: Prisma.SelectSubset<T, Prisma.DaniDeleteArgs>
