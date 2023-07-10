@@ -1,8 +1,8 @@
 import { SortOrder } from "../../util/SortOrder";
 
 export type DaniOrderByInput = {
-  id?: SortOrder;
   createdAt?: SortOrder;
+  id?: SortOrder;
   updatedAt?: SortOrder;
   username?: SortOrder;
   password?: SortOrder;

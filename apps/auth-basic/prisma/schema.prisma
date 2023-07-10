@@ -8,8 +8,8 @@ generator client {
 }
 
 model Dani {
-  id        String   @id @default(cuid())
   createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
   updatedAt DateTime @updatedAt
   username  String   @unique
   password  String
