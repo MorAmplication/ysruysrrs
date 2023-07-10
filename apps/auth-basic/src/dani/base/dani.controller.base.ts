@@ -50,8 +50,8 @@ export class DaniControllerBase {
     return await this.service.create({
       data: data,
       select: {
-        id: true,
         createdAt: true,
+        id: true,
         updatedAt: true,
         username: true,
         roles: true,
@@ -76,8 +76,8 @@ export class DaniControllerBase {
     return this.service.findMany({
       ...args,
       select: {
-        id: true,
         createdAt: true,
+        id: true,
         updatedAt: true,
         username: true,
         roles: true,
@@ -103,8 +103,8 @@ export class DaniControllerBase {
     const result = await this.service.findOne({
       where: params,
       select: {
-        id: true,
         createdAt: true,
+        id: true,
         updatedAt: true,
         username: true,
         roles: true,
@@ -139,8 +139,8 @@ export class DaniControllerBase {
         where: params,
         data: data,
         select: {
-          id: true,
           createdAt: true,
+          id: true,
           updatedAt: true,
           username: true,
           roles: true,
@@ -174,8 +174,8 @@ export class DaniControllerBase {
       return await this.service.delete({
         where: params,
         select: {
-          id: true,
           createdAt: true,
+          id: true,
           updatedAt: true,
           username: true,
           roles: true,
